@@ -107,6 +107,7 @@ namespace EditorUI_DX
             foreach (string file in files)
             {
                //do something with the files -> file is the full path to the file that was dropped
+               //blaqh asdfkjasdkl
             }
         }
 
