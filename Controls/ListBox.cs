@@ -23,7 +23,6 @@ namespace EditorUI_DX.Controls
         private Layout _layout;
         private Scroll_Rect _scrollRect;
         private Padding _padding;
-        private string _fontName;
 
 
         public Color ItemNormalColor{get;set;} = new Color(57, 60, 64);
@@ -33,10 +32,9 @@ namespace EditorUI_DX.Controls
 
 
 
-        public ListBox(Desktop _desktop, string _fontName) : base(_desktop)
+        public ListBox(Desktop _desktop) : base(_desktop)
         {
             this.BackgroundColor = new Color(57, 60, 64);
-            this._fontName = _fontName;
 
             _padding = new Padding(5,5,5,0);
 
@@ -55,7 +53,7 @@ namespace EditorUI_DX.Controls
         /// <param name="_text">The text to display on ListBoxItem</param>
         public void Add(string _text)
         {
-            ListBoxItem _item = new ListBoxItem(this._desktop, _fontName, ListItemClick)
+            ListBoxItem _item = new ListBoxItem(this._desktop, ListItemClick)
             {
                 Name = "ListBoxItem",
                 Text = _text,
@@ -75,7 +73,7 @@ namespace EditorUI_DX.Controls
         /// <param name="_tag"></param>
         public void Add(string _text, object _tag)
         {
-            ListBoxItem _item = new ListBoxItem(this._desktop, _fontName, ListItemClick)
+            ListBoxItem _item = new ListBoxItem(this._desktop, ListItemClick)
             {
                 Name = "ListBoxItem",
                 Tag = _tag,
@@ -182,7 +180,7 @@ namespace EditorUI_DX.Controls
         public Color HighlightColor{get;set;} = new Color(39, 126, 242);
 
 
-        public ListBoxItem(Desktop _desktop, string _fontName, Action<ListBoxItem> _clickCallBack) : base(_desktop)
+        public ListBoxItem(Desktop _desktop, Action<ListBoxItem> _clickCallBack) : base(_desktop)
         {
             this.ClickCallBack = _clickCallBack;
 
