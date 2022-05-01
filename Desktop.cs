@@ -78,6 +78,11 @@ namespace EditorUI_DX
             Resized(this, null);
         }
 
+        public void Resize(object sender, System.EventArgs e)
+        {
+            Resize(null, null);
+        }
+
         private void Resized(object sender, System.EventArgs e)
         {
             Rectangle _rect = this.Graphics.Viewport.Bounds;
