@@ -13,7 +13,7 @@ using System.IO;
 
 namespace EditorUI_DX.Controls
 {
-    public class ListBox : Control, IControl_Container<ListBoxItem>
+    public class ListBox : Control, IControl_Container<ListBoxItem>, IDragDrop_Container
     {
         public event Action<object, ListBoxItem> OnListBoxItemSelected;
         public ListBoxItem SelectedItem{get; private set;}
@@ -30,7 +30,7 @@ namespace EditorUI_DX.Controls
         public Color ItemHighlightColor{get;set;} = new Color(39, 126, 242);
 
 
-
+        public event Action<object, DragEventArgs> OnDragDrop;
 
 
         public ListBox(Desktop _desktop) : base(_desktop)
@@ -47,28 +47,27 @@ namespace EditorUI_DX.Controls
 
             this.OnScrollWheel += Scroll;
 
-            _desktop.OnDragEnter += DragEnter;
             _desktop.OnDragDrop += DragDrop;
-
-
         }
 
-        private void DragEnter(object sender, DragEventArgs e)
+        ~ListBox()
         {
-            OnScreenLog.Instance.Log("---listbox: DragEnter");
+            _desktop.OnDragDrop -= DragDrop;
         }
         private void DragDrop(object sender, DragEventArgs e)
         {
             if(SourceRectangle.Contains(Input.Instance.MousePosition))
             {
-                OnScreenLog.Instance.Log("---listbox: DragDrop");
+                /*OnScreenLog.Instance.Log("---listbox: DragDrop");
 
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 foreach (string file in files)
                 {
                     //do something with the files -> file is the full path to the file that was dropped
                     Add(Path.GetFileName(file));
-                }
+                }*/
+
+                OnDragDrop?.Invoke(sender, e);
             }
         }
 
