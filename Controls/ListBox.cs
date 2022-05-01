@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,7 +9,7 @@ using EditorUI_DX.Brushes;
 using EditorUI_DX.Controls;
 using EditorUI_DX.Interfaces;
 using EditorUI_DX.Utils;
-
+using System.IO;
 
 namespace EditorUI_DX.Controls
 {
@@ -22,7 +23,7 @@ namespace EditorUI_DX.Controls
         public Control_Collection<ListBoxItem> Controls{get;set;} = new Control_Collection<ListBoxItem>();
         private Layout _layout;
         private Scroll_Rect _scrollRect;
-        private Padding _padding;
+        private EditorUI_DX.Utils.Padding _padding;
 
 
         public Color ItemNormalColor{get;set;} = new Color(57, 60, 64);
@@ -36,7 +37,7 @@ namespace EditorUI_DX.Controls
         {
             this.BackgroundColor = new Color(57, 60, 64);
 
-            _padding = new Padding(5,5,5,0);
+            _padding = new EditorUI_DX.Utils.Padding(5,5,5,0);
 
             _scrollRect = new Scroll_Rect();
 
@@ -45,7 +46,36 @@ namespace EditorUI_DX.Controls
             Controls.OnControlsChanged += After_Invalidated;
 
             this.OnScrollWheel += Scroll;
+
+            _desktop.OnDragEnter += DragEnter;
+            _desktop.OnDragDrop += DragDrop;
+
+
         }
+
+        private void DragEnter(object sender, DragEventArgs e)
+        {
+            OnScreenLog.Instance.Log("---listbox: DragEnter");
+        }
+        private void DragDrop(object sender, DragEventArgs e)
+        {
+            if(SourceRectangle.Contains(Input.Instance.MousePosition))
+            {
+                OnScreenLog.Instance.Log("---listbox: DragDrop");
+
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                foreach (string file in files)
+                {
+                    //do something with the files -> file is the full path to the file that was dropped
+                    Add(Path.GetFileName(file));
+                }
+            }
+        }
+
+
+
+
+
 
         /// <summary>
         /// Adds a ListBoxItem to this ListBox

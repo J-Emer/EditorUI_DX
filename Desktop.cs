@@ -47,6 +47,10 @@ namespace EditorUI_DX
         private Dock_Manager _dock_Manager;
 
 
+        public event Action<object, DragEventArgs> OnDragEnter;
+        public event Action<object, DragEventArgs> OnDragDrop;
+    
+
 
 
 
@@ -65,7 +69,7 @@ namespace EditorUI_DX
             _game.Window.AllowUserResizing = true;
             _game.Window.ClientSizeChanged += Resized;
 
-            var form = Form.FromHandle(_game.Window.Handle) as Form;
+            Form form = Form.FromHandle(_game.Window.Handle) as Form;
             form.AllowDrop = true;
             form.DragEnter += Form_DragEnter;
             form.DragDrop += Form_DragDrop;
@@ -92,24 +96,30 @@ namespace EditorUI_DX
 
         private void Form_DragEnter(object sender, DragEventArgs e)
         {
-            Console.WriteLine("form drag enter");
+            OnScreenLog.Instance.Log("desktop drag enter");
 
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 e.Effect = DragDropEffects.Copy;
             }
+
+            OnDragEnter?.Invoke(sender, e);
+
         }
         private void Form_DragDrop(object sender, DragEventArgs e)
         {
-            Console.WriteLine("form drag drop");
+            OnScreenLog.Instance.Log("desktop drag drop");
 
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            /*string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach (string file in files)
             {
                //do something with the files -> file is the full path to the file that was dropped
                //blaqh asdfkjasdkl
-            }
+            }*/
+
+            OnDragDrop?.Invoke(sender, e);
         }
+
 
         public void Process()
         {
