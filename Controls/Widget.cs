@@ -59,9 +59,9 @@ namespace EditorUI_DX.Controls
 
 
 
-        public Widget(Desktop _desktop, string _fontName, string _title) : base(_desktop)
+        public Widget(Desktop _desktop, string _title) : base(_desktop)
         {
-            _header = new Widget_Header(_desktop, this, _fontName, _title);
+            _header = new Widget_Header(_desktop, this, _title);
             _panel = new Panel(_desktop)
             {
                 BackgroundColor = new Color(57, 60, 64)
@@ -126,7 +126,7 @@ namespace EditorUI_DX.Controls
         private Widget _parentWidget;
         private Vector2_Int _offset;
 
-        public Widget_Header(Desktop _desktop, Widget _widget, string _fontName, string _title) : base(_desktop)
+        public Widget_Header(Desktop _desktop, Widget _widget, string _title) : base(_desktop)
         {
             this._parentWidget = _widget;
 
