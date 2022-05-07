@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using EditorUI_DX.Brushes;
-using EditorUI_DX.Controls;
-using EditorUI_DX.Interfaces;
 using EditorUI_DX.Utils;
 
 
 
-namespace EditorUI_DX.Utils
+namespace EditorUI_DX.Controls
 {
     public class Menu : Control
     {
