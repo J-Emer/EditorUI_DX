@@ -14,8 +14,6 @@ namespace EditorUI_DX.Controls
         public event Action<object, ListBoxItem> OnItemSelected;
         public ListBoxItem SelectedItem{get; private set;}
 
-
-        private string _fontName;
         
         private TextBox _textBox;
         private Button _button;
