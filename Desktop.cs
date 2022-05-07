@@ -140,6 +140,5 @@ namespace EditorUI_DX
             _spritebatch.End();
         }
 
-
     }
 }
