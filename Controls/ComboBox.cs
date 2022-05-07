@@ -23,10 +23,8 @@ namespace EditorUI_DX.Controls
         private bool _isExpanded = true;
         
         
-        public ComboBox(Desktop _desktop, string _fontName) : base(_desktop)
+        public ComboBox(Desktop _desktop) : base(_desktop)
         {
-            this._fontName = _fontName;
-
             _textBox = new TextBox(_desktop)
             {
                 Size = new Vector2_Int(150,25),
@@ -41,7 +39,7 @@ namespace EditorUI_DX.Controls
 
             _button.OnMouseDown += Button_MouseDown;
 
-            _listBox = new ListBox(_desktop, this._desktop.DefaultFontName)
+            _listBox = new ListBox(_desktop)
             {
                 Position = this.Position,
             };
@@ -50,7 +48,7 @@ namespace EditorUI_DX.Controls
 
             this.Size = new Vector2_Int(200,150);
 
-            Button_MouseDown(new EditorUI.Utils.MouseEventArgs());
+            Button_MouseDown(new EditorUI_DX.Utils.MouseEventArgs());
         }
 
         /// <summary>
@@ -105,7 +103,7 @@ namespace EditorUI_DX.Controls
             _listBox.Render(_spritebatch);
         }
 
-        private void Button_MouseDown(EditorUI.Utils.EventArgs e)
+        private void Button_MouseDown(EditorUI_DX.Utils.EventArgs e)
         {
             Toggle();
         }
