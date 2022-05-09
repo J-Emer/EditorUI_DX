@@ -67,7 +67,7 @@ namespace EditorUI_DX
             this._dock_Manager = new Dock_Manager();
 
             _game.Window.AllowUserResizing = true;
-            _game.Window.ClientSizeChanged += Resized;
+            _game.Window.ClientSizeChanged += Internal_Resized;
 
             Form form = Form.FromHandle(_game.Window.Handle) as Form;
             form.AllowDrop = true;
@@ -75,15 +75,15 @@ namespace EditorUI_DX
             form.DragDrop += Form_DragDrop;
 
             Load();
-            Resized(this, null);
+            Internal_Resized(this, null);
         }
 
         public void Resize(object sender, System.EventArgs e)
         {
-            Resize(null, null);
+            Internal_Resized(null, null);
         }
 
-        private void Resized(object sender, System.EventArgs e)
+        private void Internal_Resized(object sender, System.EventArgs e)
         {
             Rectangle _rect = this.Graphics.Viewport.Bounds;
 
