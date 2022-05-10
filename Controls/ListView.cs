@@ -45,6 +45,11 @@ namespace EditorUI_DX.Controls
             _desktop.OnDragDrop += Internale_DragDrop;
         }
 
+        ~ListView()
+        {
+            _desktop.OnDragDrop -= Internale_DragDrop;
+        }
+
         private void Internale_DragDrop(object sender, DragEventArgs e)
         {
             if(SourceRectangle.Contains(Input.Instance.MousePosition))
