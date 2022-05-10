@@ -1,15 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using EditorUI_DX.Brushes;
-using EditorUI_DX.Controls;
 using EditorUI_DX.Interfaces;
 using EditorUI_DX.Utils;
-using System.IO;
+
 
 namespace EditorUI_DX.Controls
 {

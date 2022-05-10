@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +13,7 @@ using EditorUI_DX.Utils;
 
 namespace EditorUI_DX.Controls
 {
-    public class ListView : Control, IControl_Container<ListViewItem>
+    public class ListView : Control, IControl_Container<ListViewItem>, IDragDrop_Container
     {
         public Action<object, ListViewItem> OnListViewItemSelected;
         public ListViewItem SelectedListViewItem
@@ -24,26 +25,37 @@ namespace EditorUI_DX.Controls
         }
         private ListViewItem _selectedListViewItem;
 
-        public Padding Padding;
+        public EditorUI_DX.Utils.Padding Padding;
         public Control_Collection<ListViewItem> Controls{get;set;} = new Control_Collection<ListViewItem>();
         public Vector2_Int CellSize{get;set;} = new Vector2_Int(64, 84);
 
+        public event Action<object, DragEventArgs> OnDragDrop;
 
 
         public ListView(Desktop _desktop, string _fontName) : base(_desktop)
         {
-            Padding = new Padding(15);
+            Padding = new EditorUI_DX.Utils.Padding(15);
 
             BackgroundColor = new Color(57, 60, 64);
 
             Controls.OnControlsChanged += After_Invalidated;
 
             this.Size = new Vector2_Int(100,100);
+
+            _desktop.OnDragDrop += Internale_DragDrop;
+        }
+
+        private void Internale_DragDrop(object sender, DragEventArgs e)
+        {
+            if(SourceRectangle.Contains(Input.Instance.MousePosition))
+            {
+                OnDragDrop?.Invoke(sender, e);
+            }
         }
 
         public ListViewItem Add(string _text, object _tag)
         {
-            ListViewItem _item = new ListViewItem(this._desktop, "font", ListViewCallBack)
+            ListViewItem _item = new ListViewItem(this._desktop, _desktop.DefaultFontName, ListViewCallBack)
             {
                 Text = _text,
                 Size = CellSize,
@@ -55,7 +67,7 @@ namespace EditorUI_DX.Controls
         }
         public ListViewItem Add(string _text, Texture2D _texture, object _tag)
         {
-            ListViewItem _item = new ListViewItem(this._desktop, "font", ListViewCallBack)
+            ListViewItem _item = new ListViewItem(this._desktop, _desktop.DefaultFontName, ListViewCallBack)
             {
                 Text = _text,
                 Size = CellSize,
@@ -107,7 +119,6 @@ namespace EditorUI_DX.Controls
                 Controls.Collecton[i].Render(_spritebatch);
             }
         }
-
         private void ListViewCallBack(ListViewItem _viewItem)
         {
             _selectedListViewItem = _viewItem;
