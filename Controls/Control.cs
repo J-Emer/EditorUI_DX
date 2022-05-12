@@ -81,6 +81,7 @@ namespace EditorUI_DX.Controls
 
                     if(ContextMenu != null)
                     {
+                        Console.WriteLine("----------context menu");
                         ContextMenu.IsActive = true;
                         ContextMenu.Position = Utils.Vector2_Int.FromVec2(Input.Instance.MousePosition);
                     }

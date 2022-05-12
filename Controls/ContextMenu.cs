@@ -21,6 +21,8 @@ namespace EditorUI_DX.Controls
             this.Padding = new Padding(5);
             this.Controls.OnControlsChanged += After_Invalidated;
 
+            this.Size = new Vector2_Int(300, 200);
+
             this.OnMouseExit += MouseExit;
 
             IsActive = false;
@@ -31,10 +33,11 @@ namespace EditorUI_DX.Controls
         /// </summary>
         /// <param name="_text">The text the Button will display</param>
         /// <returns>Button</returns>
-        public Button Add(string _text)
+        public Button Add(string _text, string _name)
         {
             Button _b = new Button(this._desktop)
             {
+                Name = _name,
                 Text = _text
             };
 
