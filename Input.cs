@@ -5,20 +5,8 @@ namespace EditorUI_DX
 {
     public  class Input
     {
-        private static Input _instance = null;
-        public static Input Instance
-        {
-            get
-            {
-                if(_instance == null)
-                {
-                    _instance = new Input();
-                }
 
-                return _instance;
-            }
-        }
-
+        private GameWindow Window;
         private  KeyboardState pKeys;
         private  KeyboardState cKeys;
 
@@ -50,6 +38,10 @@ namespace EditorUI_DX
         public  float yAxis;
 
 
+        public Input(GameWindow _window)
+        {
+            this.Window = _window;
+        }
 
 
         public  void Update()
@@ -60,7 +52,7 @@ namespace EditorUI_DX
             //InputString = cKeys.GetPressedKeys().ToString();
 
             pMouse = cMouse;
-            cMouse = Mouse.GetState();
+            cMouse = Mouse.GetState(this.Window);
 
             pScroll = cScroll;
             cScroll = cMouse.ScrollWheelValue;

@@ -73,8 +73,8 @@ namespace EditorUI_DX.Controls
         }
         protected override void After_Process()
         {
-            bool _contains = sliderHandle.Contains(Input.Instance.MousePosition);
-            bool _lmb = Input.Instance.GetMouseButtonDown(0);
+            bool _contains = sliderHandle.Contains(this._desktop.Input.MousePosition);
+            bool _lmb = this._desktop.Input.GetMouseButtonDown(0);
             
             if(_contains && _lmb)
             {
@@ -83,12 +83,12 @@ namespace EditorUI_DX.Controls
 
             if(dragSlider)
             {
-                sliderHandle.X = (int)Input.Instance.MousePosition.X;
+                sliderHandle.X = (int)this._desktop.Input.MousePosition.X;
                 sliderHandle.X = (int)Math.Clamp(sliderHandle.X, _leftLimit, _rightLimit);
                 Handle_Value();
             }
 
-            if(Input.Instance.GetMouseButtonUp(0))
+            if(this._desktop.Input.GetMouseButtonUp(0))
             {
                 dragSlider = false;
             }

@@ -74,8 +74,8 @@ namespace EditorUI_DX.Controls
         }
         protected override void After_Process()
         {
-            bool _contains = _selectRect.Contains(Input.Instance.MousePosition);
-            bool _lmb = Input.Instance.GetMouseButtonDown(0);
+            bool _contains = _selectRect.Contains(this._desktop.Input.MousePosition);
+            bool _lmb = this._desktop.Input.GetMouseButtonDown(0);
 
             if(_contains && _lmb)
             {

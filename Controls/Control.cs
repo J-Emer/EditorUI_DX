@@ -31,13 +31,13 @@ namespace EditorUI_DX.Controls
             if (!IsActive) { return; }
 
             _pCursor = _cCursor;
-            _cCursor = SourceRectangle.Contains(Input.Instance.MousePosition);
+            _cCursor = SourceRectangle.Contains(this._desktop.Input.MousePosition);
 
-            bool _lmb_Down = Input.Instance.GetMouseButtonDown(0);
-            bool _lmb_UP = Input.Instance.GetMouseButtonUp(0);
+            bool _lmb_Down = this._desktop.Input.GetMouseButtonDown(0);
+            bool _lmb_UP = this._desktop.Input.GetMouseButtonUp(0);
 
-            bool _rmb_Down = Input.Instance.GetMouseButtonDown(1);
-            bool _rmb_Up = Input.Instance.GetMouseButtonUp(1);
+            bool _rmb_Down = this._desktop.Input.GetMouseButtonDown(1);
+            bool _rmb_Up = this._desktop.Input.GetMouseButtonUp(1);
 
             //---------Enter/Exit/Hover----------//
             if (_pCursor && _cCursor) { OnMouseHover?.Invoke(); }
@@ -56,7 +56,7 @@ namespace EditorUI_DX.Controls
                                                             {
                                                                 MouseButton = MouseButtons.Left,
                                                                 MouseButtonState = MouseButtonState.Down,
-                                                                MousePosition = Input.Instance.MousePosition
+                                                                MousePosition = this._desktop.Input.MousePosition
                                                             });
                 }
                 if (_lmb_UP)
@@ -65,7 +65,7 @@ namespace EditorUI_DX.Controls
                                                         {
                                                             MouseButton = MouseButtons.Left,
                                                             MouseButtonState = MouseButtonState.Up,
-                                                            MousePosition = Input.Instance.MousePosition
+                                                            MousePosition = this._desktop.Input.MousePosition
                                                         });
                 }
                 if(_rmb_Down && !_rmb_Up)
@@ -76,14 +76,14 @@ namespace EditorUI_DX.Controls
                                                             {
                                                                 MouseButton = MouseButtons.Right,
                                                                 MouseButtonState = MouseButtonState.Down,
-                                                                MousePosition = Input.Instance.MousePosition
+                                                                MousePosition = this._desktop.Input.MousePosition
                                                             });
 
                     if(ContextMenu != null)
                     {
                         Console.WriteLine("----------context menu");
                         ContextMenu.IsActive = true;
-                        ContextMenu.Position = Utils.Vector2_Int.FromVec2(Input.Instance.MousePosition);
+                        ContextMenu.Position = Utils.Vector2_Int.FromVec2(this._desktop.Input.MousePosition);
                     }
                 }
                 if(_rmb_Up)
@@ -92,7 +92,7 @@ namespace EditorUI_DX.Controls
                                                         {
                                                             MouseButton = MouseButtons.Right,
                                                             MouseButtonState = MouseButtonState.Up,
-                                                            MousePosition = Input.Instance.MousePosition
+                                                            MousePosition = this._desktop.Input.MousePosition
                                                         });
                 }
             }
@@ -104,11 +104,11 @@ namespace EditorUI_DX.Controls
             }
 
             //---------Scroll----------//
-            if (Input.Instance.ScrollWheel() != 0)
+            if (this._desktop.Input.ScrollWheel() != 0)
             {
                 if (_cCursor)
                 {
-                    OnScrollWheel?.Invoke(this, Input.Instance.ScrollWheel());
+                    OnScrollWheel?.Invoke(this, this._desktop.Input.ScrollWheel());
                 }
             }
 

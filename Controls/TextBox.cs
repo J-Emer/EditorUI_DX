@@ -135,7 +135,7 @@ namespace EditorUI_DX.Controls
             if(!HasFocus){return;}
             if(IsReadOnly){return;}
 
-            _buffer = Input.Instance.InputString;
+            _buffer = this._desktop.Input.InputString;
 
             foreach (var item in _parse)
             {

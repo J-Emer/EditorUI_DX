@@ -53,7 +53,7 @@ namespace EditorUI_DX.Controls
         }
         private void DragDrop(object sender, DragEventArgs e)
         {
-            if(SourceRectangle.Contains(Input.Instance.MousePosition))
+            if(SourceRectangle.Contains(this._desktop.Input.MousePosition))
             {
                 /*OnScreenLog.Instance.Log("---listbox: DragDrop");
 

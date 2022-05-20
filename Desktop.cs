@@ -18,21 +18,10 @@ namespace EditorUI_DX
 {
     public class Desktop
     {
-        private Game _game;
-        public GraphicsDevice Graphics
-        {
-            get
-            {
-                return _game.GraphicsDevice;
-            }
-        }
-        public ContentManager Content
-        {
-            get
-            {
-                return _game.Content;
-            }
-        }
+
+        public GraphicsDevice Graphics{get; private set;}
+        public ContentManager Content{get; private set;}
+        public GameWindow Window{get; private set;}
         public Texture2D DefaultTexture { get; private set; }
         public SpriteFont DefaultFont{get; private set;}
         public string DefaultFontName{get; private set;}
@@ -50,26 +39,31 @@ namespace EditorUI_DX
         public event Action<object, DragEventArgs> OnDragEnter;
         public event Action<object, DragEventArgs> OnDragDrop;
     
+        public Input Input{get; private set;}
 
 
 
 
-        public Desktop(Game _game, string _defalutFontName)
+        public Desktop(GraphicsDevice _graphics, ContentManager _content, GameWindow _window, string _defalutFontName)
         {
-            this._game = _game;
+            this.Graphics = _graphics;
+            this.Content = _content;
+            this.Window = _window;
+
+            this.Input = new Input(_window);
 
             this.DefaultFontName = _defalutFontName;
-            this.DefaultFont = this._game.Content.Load<SpriteFont>(_defalutFontName);
+            this.DefaultFont = this.Content.Load<SpriteFont>(_defalutFontName);
 
-            this.DefaultTexture = new Texture2D(_game.GraphicsDevice, 1, 1);
+            this.DefaultTexture = new Texture2D(this.Graphics, 1, 1);
             this.DefaultTexture.SetData(new Color[] { Color.White });
 
             this._dock_Manager = new Dock_Manager();
 
-            _game.Window.AllowUserResizing = true;
-            _game.Window.ClientSizeChanged += Internal_Resized;
+            this.Window.AllowUserResizing = true;
+            this.Window.ClientSizeChanged += Internal_Resized;
 
-            Form form = Form.FromHandle(_game.Window.Handle) as Form;
+            Form form = Form.FromHandle(this.Window.Handle) as Form;
             form.AllowDrop = true;
             form.DragEnter += Form_DragEnter;
             form.DragDrop += Form_DragDrop;
@@ -116,7 +110,7 @@ namespace EditorUI_DX
 
         public void Process()
         {
-            Input.Instance.Update();
+            Input.Update();
 
             for (int i = 0; i < Controls.Collecton.Count; i++)
             {

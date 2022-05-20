@@ -194,7 +194,7 @@ namespace EditorUI_DX.Controls
 
         private void Container_MouseDown(EditorUI_DX.Utils.MouseEventArgs e)
         {
-            _dragHandle = _splitterHandle.Contains(Input.Instance.GetMouseRect());
+            _dragHandle = _splitterHandle.Contains(this._desktop.Input.GetMouseRect());
             if(_dragHandle)
             {
                 _handleBrush.DrawColor = SplitterSelectColor;
@@ -210,7 +210,7 @@ namespace EditorUI_DX.Controls
         {
             if(_dragHandle)
             {
-                _splitterHandle.X = Vector2_Int.FromVec2(Input.Instance.MousePosition).X;
+                _splitterHandle.X = Vector2_Int.FromVec2(this._desktop.Input.MousePosition).X;
                 _splitterHandle.X = Math.Clamp(_splitterHandle.X, this.SourceRectangle.Left, this.SourceRectangle.Right - SplitterWidth);
                 After_Invalidated();
             }

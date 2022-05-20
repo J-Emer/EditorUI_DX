@@ -35,7 +35,7 @@ namespace EditorUI_DX.Controls
 
         private void Internal_DragDrop(object sender, DragEventArgs e)
         {
-            if(SourceRectangle.Contains(Input.Instance.MousePosition))
+            if(SourceRectangle.Contains(this._desktop.Input.MousePosition))
             {
                 OnDragDrop?.Invoke(sender, e);
 

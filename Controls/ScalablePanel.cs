@@ -45,10 +45,10 @@ namespace EditorUI_DX.Controls
 
             this.BackgroundColor = new Color(57, 60, 64);
 
-            _leftGrabber = new Left_Grabber();
-            _rightGrabber = new Right_Grabber();
-            _bottomGrabber = new Bottom_Grabber();
-            _topGrabber = new Top_Grabber();
+            _leftGrabber = new Left_Grabber(this._desktop);
+            _rightGrabber = new Right_Grabber(this._desktop);
+            _bottomGrabber = new Bottom_Grabber(this._desktop);
+            _topGrabber = new Top_Grabber(this._desktop);
 
             _rightGrabber.AfterRelease += After_Release;
             _bottomGrabber.AfterRelease += After_Release;
@@ -68,7 +68,7 @@ namespace EditorUI_DX.Controls
 
         private void Internal_DragDrop(object sender, DragEventArgs e)
         {
-            if(SourceRectangle.Contains(Input.Instance.MousePosition))
+            if(SourceRectangle.Contains(this._desktop.Input.MousePosition))
             {
                 OnDragDrop?.Invoke(sender, e);
             }
@@ -180,20 +180,26 @@ namespace EditorUI_DX.Controls
         private bool _lastContains = false;
         private bool _contains = false;
 
+        protected Desktop _desktop;
+
+        public Grabber(Desktop _desktop)
+        {
+            this._desktop = _desktop;
+        }
 
         public void Update(Element _element)
         {
             if (!IsActive) { return; }
 
             _lastContains = _contains;
-            _contains = _rect.Contains(Input.Instance.MousePosition);
+            _contains = _rect.Contains(this._desktop.Input.MousePosition);
 
             if (_contains)
             {
                 Mouse.SetCursor(MouseCursor.Hand);
             }
 
-            if (Input.Instance.GetMouseButtonDown(0) && _contains)
+            if (this._desktop.Input.GetMouseButtonDown(0) && _contains)
             {
                 Start_Grab(_element);
             }
@@ -203,7 +209,7 @@ namespace EditorUI_DX.Controls
                 Handle_Grab(_element);
             }
 
-            if (Input.Instance.GetMouseButtonUp(0))
+            if (this._desktop.Input.GetMouseButtonUp(0))
             {
                 _isGrabbed = false;
                 DrawColor = Color.White;
@@ -221,24 +227,27 @@ namespace EditorUI_DX.Controls
         {
             _isGrabbed = true;
             //_offset = Vector2_Int.FromVec2(Input.MousePosition) - new Vector2_Int(_element.SourceRectangle.Right, _element.SourceRectangle.Top);
-            _offset = Vector2_Int.FromVec2(Input.Instance.MousePosition) - new Vector2_Int(_rect.Center.X, _rect.Center.Y);
+            _offset = Vector2_Int.FromVec2(this._desktop.Input.MousePosition) - new Vector2_Int(_rect.Center.X, _rect.Center.Y);
             DrawColor = Color.Yellow;
         }
         public virtual void Handle_Grab(Element _element) { }
     }
     internal class Right_Grabber : Grabber
     {
+        public Right_Grabber(Desktop _desktop) : base(_desktop){}
         public override void Handle_Grab(Element _element)
         {
-            int _x = (Vector2_Int.FromVec2(Input.Instance.MousePosition).X + _offset.X) - _element.Position.X;
+            int _x = (Vector2_Int.FromVec2(this._desktop.Input.MousePosition).X + _offset.X) - _element.Position.X;
             _element.Size = new Vector2_Int(_x, _element.Size.Y);
         }
     }
     internal class Bottom_Grabber : Grabber
     {
+        public Bottom_Grabber(Desktop _desktop) : base(_desktop){}
+
         public override void Handle_Grab(Element _element)
         {
-            int _y = (Vector2_Int.FromVec2(Input.Instance.MousePosition).Y + _offset.Y) - _element.Position.Y;
+            int _y = (Vector2_Int.FromVec2(this._desktop.Input.MousePosition).Y + _offset.Y) - _element.Position.Y;
             _element.Size = new Vector2_Int(_element.Size.X, _y);
         }
     }
@@ -251,17 +260,20 @@ namespace EditorUI_DX.Controls
         int originalMouseX;
         int originalX;
 
+        public Left_Grabber(Desktop _desktop) : base(_desktop){}
+
+
         protected override void Start_Grab(Element _element)
         {
             base.Start_Grab(_element);
 
             originalWidth = _element.Size.X;
-            originalMouseX = (int)Input.Instance.MousePosition.X;
+            originalMouseX = (int)this._desktop.Input.MousePosition.X;
             originalX = _element.Position.X;
         }
         public override void Handle_Grab(Element _element)
         {
-            Vector2_Int _mousePos = Vector2_Int.FromVec2(Input.Instance.MousePosition);
+            Vector2_Int _mousePos = Vector2_Int.FromVec2(this._desktop.Input.MousePosition);
 
             int _newWidth = originalWidth - (_mousePos.X - originalMouseX);
             int _newX = originalX + (_mousePos.X - originalMouseX);
@@ -279,17 +291,20 @@ namespace EditorUI_DX.Controls
         int originalMouseY;
         int originalY;
 
+        public Top_Grabber(Desktop _desktop) : base(_desktop){}
+
+
         protected override void Start_Grab(Element _element)
         {
             base.Start_Grab(_element);
 
             originalHeight = _element.Size.Y;
-            originalMouseY = (int)Input.Instance.MousePosition.Y;
+            originalMouseY = (int)this._desktop.Input.MousePosition.Y;
             originalY = _element.Position.Y;
         }
         public override void Handle_Grab(Element _element)
         {
-            Vector2_Int _mousePos = Vector2_Int.FromVec2(Input.Instance.MousePosition);
+            Vector2_Int _mousePos = Vector2_Int.FromVec2(this._desktop.Input.MousePosition);
             int newHeight = originalHeight - (_mousePos.Y - originalMouseY);
             int newY = originalY + (_mousePos.Y - originalMouseY);
 

@@ -67,8 +67,8 @@ namespace EditorUI_DX.Controls
                 BackgroundColor = new Color(57, 60, 64)
             };
 
-            _rightGrabber = new Right_Grabber();
-            _bottomGrabber = new Bottom_Grabber();
+            _rightGrabber = new Right_Grabber(this._desktop);
+            _bottomGrabber = new Bottom_Grabber(this._desktop);
 
             _desktop.Controls.Add(this);
         }
@@ -167,7 +167,7 @@ namespace EditorUI_DX.Controls
         {
             if(_canMove)
             {
-                _parentWidget.Position = Vector2_Int.FromVec2(Input.Instance.MousePosition) + _offset;
+                _parentWidget.Position = Vector2_Int.FromVec2(this._desktop.Input.MousePosition) + _offset;
             }
 
             _label.Process();
@@ -180,7 +180,7 @@ namespace EditorUI_DX.Controls
         }
         private void Header_MouseDown(EventArgs e)
         {
-            _offset = this.Position - Vector2_Int.FromVec2(Input.Instance.MousePosition);
+            _offset = this.Position - Vector2_Int.FromVec2(this._desktop.Input.MousePosition);
             _canMove = true;
         }
         private void Header_OnMouseUp(EventArgs e)
