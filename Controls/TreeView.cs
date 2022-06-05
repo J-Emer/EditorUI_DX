@@ -44,13 +44,14 @@ namespace EditorUI_DX.Controls
         /// </summary>
         /// <param name="_text">The text the TreeNode will display</param>
         /// <returns>TreeNode</returns>
-        public TreeNode AddParent(string _text)
+        public TreeNode AddParent(string _text, object _tag = null)
         {
             TreeNode _node = new TreeNode(this._desktop, _fontName, After_Invalidated, NodeCallBack, this)
             {
                 Name = $"Node_{_text}",
                 Text = _text,
                 Size = new Vector2_Int(150, 25),
+                Tag = _tag,
                 BackgroundColor = NodeNormalColor,
                 NodeNormalColor = NodeNormalColor,
                 NodeHighlightColor = NodeHighlightColor,
@@ -70,13 +71,14 @@ namespace EditorUI_DX.Controls
         /// </summary>
         /// <param name="_parent">The Parent TreeNode</param>
         /// <param name="_text">The text the ChildTreeNode will dispaly</param>
-        public void AddChild(TreeNode _parent, string _text)
+        public void AddChild(TreeNode _parent, string _text, object _tag = null)
         {
             TreeNode _node = new TreeNode(this._desktop, _fontName, After_Invalidated, NodeCallBack, this, _parent)
             {
                 Name = $"Node_{_text}",
                 Text = _text,
                 Size = new Vector2_Int(150, 25),
+                Tag = _tag,
                 BackgroundColor = NodeNormalColor,
                 NodeNormalColor = NodeNormalColor,
                 NodeHighlightColor = NodeHighlightColor,
