@@ -145,6 +145,10 @@ namespace EditorUI_DX.Controls
         private bool _firstMove;
 
 
+        public int SplitterDefaultOffset{get;set;} = 200;
+
+
+
         public Split_Container(Desktop _desktop) : base(_desktop)
         {
             _firstMove = true;
@@ -182,7 +186,7 @@ namespace EditorUI_DX.Controls
             if(_firstMove && Position != Vector2_Int.Zero && Size != Vector2_Int.Zero)
             {
                 _firstMove = false;
-                _splitterHandle = new Rectangle(this.Position.X + 200, this.Position.Y, _splitterWidth, this.Size.Y);
+                _splitterHandle = new Rectangle(this.Position.X + SplitterDefaultOffset, this.Position.Y, _splitterWidth, this.Size.Y);
             }
             _splitterHandle.Y = this.Position.Y;
             _splitterHandle.Width = _splitterWidth;
