@@ -144,7 +144,9 @@ namespace EditorUI_DX.Controls
 
         private bool _firstMove;
 
-
+        /// <summary>
+        /// Defines how far to the right from the X position the Slider Handle will be
+        /// </summary>
         public int SplitterDefaultOffset{get;set;} = 200;
 
 
